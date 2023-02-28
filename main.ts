@@ -1,13 +1,20 @@
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (REDJUMPCOUNT <= 1) {
-        RED_MONKE.vy = -100
+        RED_MONKE.vy = JUMP_SPEED
         REDJUMPCOUNT += 1
     }
 })
-let REDJUMPCOUNT = 0
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava0, function (sprite, location) {
+	
+})
 let RED_MONKE: Sprite = null
-tiles.setCurrentTilemap(tilemap`level1`)
+let REDJUMPCOUNT = 0
+let JUMP_SPEED = 0
+let GRAVITY = 250
+JUMP_SPEED = -120
+REDJUMPCOUNT = 2
 scene.setBackgroundColor(9)
+tiles.setCurrentTilemap(tilemap`level1`)
 RED_MONKE = sprites.create(img`
     . . . . f f f f f . . . . . . . 
     . . . f 2 2 2 2 2 f . . . . . . 
@@ -27,8 +34,8 @@ RED_MONKE = sprites.create(img`
     . . . . f f f f f f f f f . . . 
     `, SpriteKind.Player)
 controller.moveSprite(RED_MONKE, 100, 0)
-RED_MONKE.ay = 200
-REDJUMPCOUNT = 2
+RED_MONKE.ay = 250
+scene.centerCameraAt(80, 60)
 game.onUpdate(function () {
     if (RED_MONKE.isHittingTile(CollisionDirection.Bottom)) {
         REDJUMPCOUNT = 0
